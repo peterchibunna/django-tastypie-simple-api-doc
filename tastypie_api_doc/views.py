@@ -15,6 +15,6 @@ def build_doc(request):
         api_json = obj.top_level(request)
         api_json = json.loads(api_json.content)
         # print api_json
-        return render_to_response('templates/index.html', {'api': {'data': api_json, 'name': obj.api_name}}, context_instance=RequestContext(request))
+        return render_to_response('index.html', {'api': {'data': api_json, 'name': obj.api_name}}, context_instance=RequestContext(request))
     except ImportError:
         return HttpResponse("No donuts for you. You have to create API_OBJECT_LOCATION in settings.py")
