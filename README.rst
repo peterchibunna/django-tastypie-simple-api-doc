@@ -39,7 +39,7 @@ And....We are almost there. Now, you need to "collect your static" if you know w
 
 ::
 
-   python manage.py collect static
+   python manage.py collectstatic
 
 
 And this is it. :)
