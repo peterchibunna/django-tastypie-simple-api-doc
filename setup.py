@@ -96,7 +96,10 @@ setup(
                                 'static/tastypie_api_doc/bower_components/semantic/dist/*.js',
                                 'static/tastypie_api_doc/bower_components/semantic/dist/*.css',
                                 'static/tastypie_api_doc/bower_components/semantic/dist/components/*.js',
-                                'static/tastypie_api_doc/bower_components/semantic/dist/components/*.css']},
+                                'static/tastypie_api_doc/bower_components/semantic/dist/components/*.css',
+                                'static/tastypie_api_doc/bower_components/semantic/dist/themes/default/assets/fonts/*.ttf',
+                                'static/tastypie_api_doc/bower_components/semantic/dist/themes/default/assets/fonts/*.woff'
+                                'static/tastypie_api_doc/bower_components/semantic/dist/themes/default/assets/fonts/*.svg']},
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
