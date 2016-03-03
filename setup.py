@@ -89,8 +89,8 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    # packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
-    packages=['tastypie_api_doc'],
+    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    # packages=['tastypie_api_doc'],
     package_data={'tastypie_api_doc': ['templates/index.html', 
                                 'static/tastypie_api_doc/bower_components/jquery/dist/*.js',
                                 'static/tastypie_api_doc/bower_components/semantic/dist/*.js',
