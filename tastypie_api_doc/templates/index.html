@@ -35,7 +35,7 @@
     <div class="ui container">
       <a href="#" class="header item">
 {#        <img class="logo" src="assets/images/logo.png">#}
-        API NAME: {{ api.name }}
+        Simple Tastypie API Documentation
       </a>
 {#      <a href="#" class="item">Home</a>#}
 {#      <div class="ui simple dropdown item">#}
@@ -60,7 +60,7 @@
   </div>
 
   <div class="ui main text container">
-    <h1 class="ui header">Simple Tastypie API Documentation</h1>
+    <h1 class="ui header">Resources</h1>
 {#    <p>This is a basic fixed menu template using fixed size containers.</p>#}
 {#    <p>A text container is used for the main container, which is useful for single column layouts</p>#}
 {#    <img class="wireframe" src="assets/images/wireframe/media-paragraph.png">#}
@@ -70,10 +70,11 @@
 {#    <img class="wireframe" src="assets/images/wireframe/paragraph.png">#}
 {#    <img class="wireframe" src="assets/images/wireframe/paragraph.png">#}
 {#    <img class="wireframe" src="assets/images/wireframe/paragraph.png">#}
-      <table class="ui selectable celled striped table">
+      <!--<div class="ui top right attached orange label">Api name: {{ api.name }}</div>-->
+      <table class="ui selectable celled striped black table">
           <thead>
             <tr><th colspan="3">
-              Resources
+                <a class="ui orange right ribbon label">Api: {{ api.name }}</a>
             </th>
           </tr></thead>
           <tbody>
@@ -154,6 +155,7 @@
     $('.ui.modal').modal();
     $('tr.resource').popup({inline: true});
     $( ".collapsing" ).click(function() {
+        $('tr.resource').popup('hide');
         var endpoint = $(this).closest('tr').children('td.collapsing').text().trim();
         $("#" + endpoint)
             .modal('setting', 'transition', 'fade up')
