@@ -70,7 +70,7 @@
 {#    <img class="wireframe" src="assets/images/wireframe/paragraph.png">#}
 {#    <img class="wireframe" src="assets/images/wireframe/paragraph.png">#}
 {#    <img class="wireframe" src="assets/images/wireframe/paragraph.png">#}
-      <table class="ui celled striped table">
+      <table class="ui selectable celled striped table">
           <thead>
             <tr><th colspan="3">
               Resources
@@ -78,7 +78,7 @@
           </tr></thead>
           <tbody>
             {% for key, value in api.data.items %}
-            <tr>
+            <tr class="resource" data-content="Click here to see more about '{{key}}'" data-variation="wide">
               <td class="collapsing">
                 <i class="folder icon"></i> {{ key }}
               </td>
@@ -89,6 +89,17 @@
           </tbody>
         </table>
   </div>
+
+  {% for key, value in api.data.items %}
+    <div class="ui long modal " id="{{key}}">
+      <div class="header">{{key}}</div>
+      <div class="content">
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+    </div>
+  {% endfor %}
 
   <div class="ui inverted vertical footer segment">
     <div class="ui center aligned container">
@@ -123,7 +134,7 @@
         <div class="wide column">
           <h4 class="ui inverted header">A work made by <a href="https://github.com/matheuscas">matheuscas</a> at
               <a href="http://www.maqhin.com.br">Maqhin Soluções Tecnológicas</a>.</h4>
-          <p>Feel free to share, contribute and <a href="https://github.com/matheuscas/django-tastypie-simple-api-doc">give a star the project at Github.</a>:)</p>
+          <p>Feel free to share, contribute and <a href="https://github.com/matheuscas/django-tastypie-simple-api-doc">give a star the project at Github. :)</a></p>
         </div>
       </div>
 {#      <div class="ui inverted section divider"></div>#}
@@ -139,4 +150,14 @@
 
 <script src="/static/tastypie_api_doc/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/static/tastypie_api_doc/bower_components/semantic/dist/semantic.min.js"></script>
+<script>
+    $('.ui.modal').modal();
+    $('tr.resource').popup({inline: true});
+    $( ".collapsing" ).click(function() {
+        var endpoint = $(this).closest('tr').children('td.collapsing').text().trim();
+        $("#" + endpoint)
+            .modal('setting', 'transition', 'fade up')
+            .modal('show');
+    });
+</script>
 </body></html>
