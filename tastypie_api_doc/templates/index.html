@@ -1,3 +1,4 @@
+{% load  tastypie_doc_filters %}
 <html><head>
   <!-- Standard Meta -->
   <meta charset="utf-8">
@@ -93,11 +94,39 @@
 
   {% for key, value in api.data.items %}
     <div class="ui long modal " id="{{key}}">
-      <div class="header">{{key}}</div>
+      <div class="header">Resource: {{key}}</div>
       <div class="content">
-        <p></p>
-        <p></p>
-        <p></p>
+          <h2>URL</h2>
+          <ul>
+              <li>{{ value.list_endpoint }}</li>
+          </ul>
+          <p></p>
+          {% for k, v in value.schema.items %}
+            <h2>{{k|capfirst}}</h2>
+            {% if value.schema|is_dict:k and k != 'fields'%}
+            <ul>
+                {% for kk,vv in value.schema|items:k %}
+                    <li>{{kk}}</li>
+                {% endfor %}
+            </ul>
+            {% elif value.schema|is_dict:k and k == 'fields' %}
+                <ul>
+                    {% for kk,vv in value.schema|items:k %}
+                        <li>{{kk}}</li>
+                    {% endfor %}
+                </ul>
+            {% elif value.schema|is_list:k %}
+                <ul>
+                    {% for item in value.schema|get:k %}
+                        <li>{{item|upper}}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <ul>
+                    <li>{{value.schema|get:k}}</li>
+                </ul>
+            {% endif %}
+          {% endfor %}
       </div>
     </div>
   {% endfor %}
