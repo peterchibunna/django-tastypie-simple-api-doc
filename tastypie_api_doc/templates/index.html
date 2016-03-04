@@ -92,37 +92,44 @@
         </table>
   </div>
 
+  <!-- MODALS -->
+
   {% for key, value in api.data.items %}
     <div class="ui long modal " id="{{key}}">
       <div class="header">Resource: {{key}}</div>
       <div class="content">
           <h2>URL</h2>
-          <ul>
+          <ul class="ui huge list">
               <li>{{ value.list_endpoint }}</li>
           </ul>
           <p></p>
           {% for k, v in value.schema.items %}
             <h2>{{k|capfirst}}</h2>
             {% if value.schema|is_dict:k and k != 'fields'%}
-            <ul>
+            <ul class="ui huge list">
                 {% for kk,vv in value.schema|items:k %}
                     <li>{{kk}}</li>
                 {% endfor %}
             </ul>
             {% elif value.schema|is_dict:k and k == 'fields' %}
-                <ul>
+                <ul class="ui huge list">
                     {% for kk,vv in value.schema|items:k %}
-                        <li>{{kk}}</li>
+                        {% if vv|get:'blank' == False %}
+                        <li class="field">
+                            {{kk}} <a class="ui red tag label">Required</a> <a class="ui teal tag label">{{vv|get:'type'}}</a></li>
+                        {% else %}
+                        <li>{{kk}} <a class="ui teal tag label">{{vv|get:'type'}}</a> </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             {% elif value.schema|is_list:k %}
-                <ul>
+                <ul class="ui huge list">
                     {% for item in value.schema|get:k %}
                         <li>{{item|upper}}</li>
                     {% endfor %}
                 </ul>
             {% else %}
-                <ul>
+                <ul class="ui huge list">
                     <li>{{value.schema|get:k}}</li>
                 </ul>
             {% endif %}
