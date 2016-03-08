@@ -14,7 +14,16 @@ def build_doc(request):
         obj = getattr(module, obj_name)
         api_json = obj.top_level(request)
         api_json = json.loads(api_json.content)
-        # print api_json
-        return render_to_response('index.html', {'api': {'data': api_json, 'name': obj.api_name}}, context_instance=RequestContext(request))
+        resources_docstrings = get_resources_docstrings(obj.__dict__['_registry'])
+        return render_to_response('index.html', {'api': {'data': api_json, 'name': obj.api_name, 'docstrings': resources_docstrings}}, context_instance=RequestContext(request))
     except ImportError:
         return HttpResponse("No donuts for you. You have to create API_OBJECT_LOCATION in settings.py")
+
+
+def get_resources_docstrings(resources):
+    resources_docstrings = {}
+    from django_markup.markup import formatter
+    for key, value in resources.items():
+        resources_docstrings[key] = formatter(value.__doc__.replace('<','&lt').replace('>','&gt'), filter_name='linebreaks') if value.__doc__ else "No docstring"
+    return resources_docstrings
+
