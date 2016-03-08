@@ -107,6 +107,14 @@
           <ul class="ui huge list">
               <li>{{ value.list_endpoint }}</li>
           </ul>
+          {% if api.prepend_urls|len_key_dict:key > 0 %}
+          <h2>Prepend_urls</h2>
+          <ul class="ui huge list">
+              {% for u in api.prepend_urls|get:key %}
+              <li>{{ u }}</li>
+              {% endfor %}
+          </ul>
+          {% endif %}
           <p></p>
           {% for k, v in value.schema.items %}
             <h2>{{k|capfirst}}</h2>
@@ -176,7 +184,8 @@
         <div class="wide column">
           <h4 class="ui inverted header">A work made by <a href="https://github.com/matheuscas">matheuscas</a> at
               <a href="http://www.maqhin.com.br">Maqhin Soluções Tecnológicas</a>.</h4>
-          <p>Feel free to share, contribute and <a href="https://github.com/matheuscas/django-tastypie-simple-api-doc">give a star the project at Github. :)</a></p>
+          <p>Feel free to share, contribute and <a href="https://github.com/matheuscas/django-tastypie-simple-api-doc">give a star the project at Github.</a> &#128513;</p>
+            <span>This project uses the amazing <a href="http://semantic-ui.com">Semantic UI</a> to built it's UI.</span>
         </div>
       </div>
 {#      <div class="ui inverted section divider"></div>#}

@@ -21,3 +21,7 @@ def is_dict(obj, key):
 @register.filter
 def is_list(obj, key):
     return type(obj[key]) is list
+
+@register.filter
+def len_key_dict(dict, key):
+    return len(dict[key])
