@@ -10,6 +10,7 @@
   <title>Simple Tastypie API Documentation</title>
 
 <link rel="stylesheet" type="text/css" href="/static/tastypie_api_doc/bower_components/semantic/dist/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/static/tastypie_api_doc/tastypie_api_doc_style.css">
 
   <style type="text/css">
   body {
@@ -100,51 +101,66 @@
       <div class="header">Resource: {{key}}</div>
       <div class="content">
           <h2>Docstring</h2>
-          <div class="ui raised segment">
+          <div class="ui message">
               {{ api.docstrings|get:key|safe }}
           </div>
           <h2>URL</h2>
-          <ul class="ui huge list">
-              <li>{{ value.list_endpoint }}</li>
-          </ul>
+          <div class="ui huge list">
+              <div class="item">{{ value.list_endpoint }}</div>
+          </div>
           {% if api.prepend_urls|len_key_dict:key > 0 %}
           <h2>Prepend_urls</h2>
-          <ul class="ui huge list">
+          <div class="ui huge list">
               {% for u in api.prepend_urls|get:key %}
-              <li>{{ u }}</li>
+              <div class="item">{{ u }}</div>
               {% endfor %}
-          </ul>
+          </div>
           {% endif %}
           <p></p>
           {% for k, v in value.schema.items %}
             <h2>{{k|capfirst}}</h2>
             {% if value.schema|is_dict:k and k != 'fields'%}
-            <ul class="ui huge list">
+            <div class="ui huge list">
                 {% for kk,vv in value.schema|items:k %}
-                    <li>{{kk}}</li>
+                        {% if not value.schema|get:k|is_list:kk %}
+                            <div class="item">{{kk}}
+                                {% if vv == 1 %}
+                                    <a class="ui black tag label">ALL</a>
+                                {% else %}
+                                    <a class="ui brown tag label">ALL_WITH_RELATIONS</a>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <div class="item">{{kk}}</div>
+                            <ul>
+                                {% for vvv in value.schema|get:k|get:kk %}
+                                    <li>{{vvv}}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                 {% endfor %}
-            </ul>
+            </div>
             {% elif value.schema|is_dict:k and k == 'fields' %}
-                <ul class="ui huge list">
+                <div class="ui huge list">
                     {% for kk,vv in value.schema|items:k %}
                         {% if vv|get:'blank' == False %}
-                        <li class="field">
-                            {{kk}} <a class="ui red tag label">Required</a> <a class="ui teal tag label">{{vv|get:'type'}}</a></li>
+                        <div class="item field">
+                            {{kk}} <a class="ui red tag label">Required</a> <a class="ui tag label {{vv|get:'type'}}">{{vv|get:'type'}}</a></div>
                         {% else %}
-                        <li>{{kk}} <a class="ui teal tag label">{{vv|get:'type'}}</a> </li>
+                        <div class="item">{{kk}} <a class="ui tag label {{vv|get:'type'}}">{{vv|get:'type'}}</a> </div>
                         {% endif %}
                     {% endfor %}
-                </ul>
+                </div>
             {% elif value.schema|is_list:k %}
-                <ul class="ui huge list">
+                <div class="ui huge list">
                     {% for item in value.schema|get:k %}
-                        <li>{{item|upper}}</li>
+                        <div class="item"> <a class="ui label {{item}} huge">{{item|upper}}</a></div>
                     {% endfor %}
-                </ul>
+                </div>
             {% else %}
-                <ul class="ui huge list">
-                    <li>{{value.schema|get:k}}</li>
-                </ul>
+                <div class="ui huge list">
+                    <div class="item">{{value.schema|get:k}}</div>
+                </div>
             {% endif %}
           {% endfor %}
       </div>
