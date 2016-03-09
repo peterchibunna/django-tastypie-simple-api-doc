@@ -25,3 +25,7 @@ def is_list(obj, key):
 @register.filter
 def len_key_dict(dict, key):
     return len(dict[key])
+
+@register.filter
+def is_obj_list(obj):
+    return type(obj) is list
